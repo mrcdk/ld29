@@ -1,5 +1,6 @@
 package ;
 
+import entities.Bomb;
 import entities.Trash;
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeState;
@@ -7,6 +8,7 @@ import flixel.FlxG;
 import flixel.group.FlxTypedGroup;
 import flixel.plugin.MouseEventManager;
 import flixel.util.FlxAngle;
+import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
 import nape.geom.Vec2;
@@ -18,17 +20,24 @@ import nape.geom.Vec2;
 class BombState extends FlxNapeState {
 
 	var trashGroup:FlxTypedGroup<Trash>;
+	var bomb:Bomb;
 	
 	override public function create():Void {
 		super.create();
-		
-		//createWalls();
+		FlxG.camera.bgColor = FlxColor.FOREST_GREEN;
+		FlxG.fixedTimestep = false;
+		createWalls();
 		FlxG.plugins.add(new MouseEventManager());
+		
+		bomb = new Bomb(0, 0);
+		add(bomb);
 		
 		trashGroup = new FlxTypedGroup<Trash>();
 		add(trashGroup);
 
-		spawnTrash(20);
+		spawnTrash(10);
+		
+		new FlxTimer(1, function(_) { if (FlxRandom.chanceRoll()) wind(FlxRandom.sign() * FlxRandom.floatRanged(0, 400), FlxRandom.sign() * FlxRandom.floatRanged(0, 400)); }, 0);
 		//var timer = new FlxTimer(3, function(_) { trashGroup.forEachAlive(function(t) { t.body.applyImpulse( Vec2.weak(-50000, -60000)); }); spawnTrash(20, -50000, -60000); } );
 	}
 	
@@ -52,11 +61,10 @@ class BombState extends FlxNapeState {
 	}
 	
 	override public function update():Void {
-		if (FlxRandom.chanceRoll(0.5)) {
-			wind(FlxRandom.floatRanged(-600, 600), FlxRandom.floatRanged(-600, 600));
-		} else if (FlxRandom.chanceRoll(1)) {
-			wind(0, 0);
-		}
+		//if (FlxRandom.chanceRoll(10)) {
+			//wind(FlxRandom.sign() * FlxRandom.floatRanged(0, 400), FlxRandom.sign() * FlxRandom.floatRanged(0, 400));
+		//}
+		
 		super.update();
 	}
 	

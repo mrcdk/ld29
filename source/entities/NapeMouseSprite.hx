@@ -18,25 +18,18 @@ class NapeMouseSprite extends FlxNapeSprite{
 
 	private var joint:DistanceJoint;
 	
-	public function new(X:Float=0, Y:Float=0) {
+	public function new(X:Float = 0, Y:Float = 0, initialize:Bool = true ) {
 		super(X, Y);
-		revive();
+		if(initialize)
+			revive();
 	}
 	
 	override public function update():Void {
 		super.update();
 		if (joint.active) {
 			joint.anchor1.set(Vec2.weak(FlxG.mouse.x, FlxG.mouse.y));
-			// todo move to cover
-			if (FlxG.keys.justPressed.A) {
-				body.rotation = FlxAngle.asRadians(FlxAngle.asDegrees(body.rotation) - 90);
-			}
-			if (FlxG.keys.justPressed.D) {
-				body.rotation = FlxAngle.asRadians(FlxAngle.asDegrees(body.rotation) + 90);
-			}
-			//
 			if (FlxG.mouse.justReleased) {
-				joint.active = false;
+				onMouseUp(null);
 			}
 		}
 		
@@ -62,29 +55,28 @@ class NapeMouseSprite extends FlxNapeSprite{
 	
 	override public function revive():Void {
 		initialize();
+		addMouseEvents();
 		super.revive();
 	}
 	
 	private function initialize() {
-		//makeGraphic(FlxRandom.intRanged(32, 256), FlxRandom.intRanged(32, 256));
 		var drag = FlxRandom.floatRanged(0.8, 0.95);
 		setDrag(drag, drag);
 		createRectangularBody(width, height);
-		
-		body.setShapeFilters(new InteractionFilter(2, ~2));
 		joint = new DistanceJoint(FlxNapeState.space.world, body, Vec2.weak(), Vec2.weak(), 0, 0);
-								  
-								  
 		joint.stiff = false;
 		joint.damping = 1;
 		joint.frequency = 2;
 		joint.space = FlxNapeState.space;
 		joint.active = false;
-		MouseEventManager.add(this, onMouseDown, onMouseUp, onMouseOver, onMouseOut);
+	}
+	
+	private inline function addMouseEvents(pixelPerfect:Bool = true):Void {
+		MouseEventManager.add(this, onMouseDown, onMouseUp, onMouseOver, onMouseOut, false, true, pixelPerfect);
 	}
 	
 	private function onMouseDown(_) {
-		//trace("mouse down");
+		
 		joint.anchor2.set(body.worldPointToLocal(Vec2.weak(FlxG.mouse.x, FlxG.mouse.y)));
 		joint.active = true;
 	}

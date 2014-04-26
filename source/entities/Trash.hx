@@ -33,6 +33,8 @@ class Trash extends NapeMouseSprite {
 	override function initialize() {
 		loadGraphic(FlxRandom.getObject(TRASH_GRAPHICS));
 		super.initialize();
-		
+		addMouseEvents();
+		body.gravMass = FlxRandom.floatRanged(1, 100);
+		body.setShapeFilters(new InteractionFilter(2, ~3));
 	}
 }
