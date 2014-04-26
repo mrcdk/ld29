@@ -1,0 +1,40 @@
+bomb diffusal
+- pile of crap, remove it (beneath the surface) http://haxeflixel.com/demos/MouseEventManager/
+- Show a Bomb timer and some taps
+- Unscrew the taps http://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
+- Add more taps if needed
+- Find the symbol between the taps like a puzzle
+- Book with the trademark and the symbol of the bomb maker. Also the voltage.
+- Check different cable ends to check the voltage and diffuse it if voltages match :D
+
+trash behavior:
+- Trash will be papers, gum envelopes, panflets, etc.
+- Trash can be removed from the screen
+- trash will spawn at different rates: papers flying because wind, etc
+
+covers:
+- Screwed with a random number of screws (1, 3, 5)
+- Can be removed, rotated and flipped
+- behind them there will be parts of the manifacturer's logo so they can be assembled and find the correct diffusal path
+
+screws:
+- Will hold the covers and the cables
+- Will have different types of screw ( star, line, tripoint )
+
+Timer:
+- Will start the countdown at the start
+- End of game if reach 0
+
+Cables:
+- Following the diffusal instructions will be cut or removed
+- A screw will connect each extreme of the cable
+- Will give the correct voltage if tested each extreme
+
+
+WIN:
+- The bomb is diffused by stopping the timer
+
+LOSE:
+- The bomb will explode if:
+  - The time runs out.
+  - The user make a wrong movement (maybe remove some of the total time)
